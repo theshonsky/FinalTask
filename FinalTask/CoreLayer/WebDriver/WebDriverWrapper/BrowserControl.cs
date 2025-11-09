@@ -9,7 +9,7 @@ namespace FinalTask.CoreLayer.WebDriver.WebDriverWrapper
 
         private readonly IWebDriver driver;
 
-        private const int WaitTimeInSeconds = 5;
+        private const int WaitTimeInSeconds = 2;
 
         private readonly ILog log = LogManager.GetLogger(typeof(WebDriverWrapper));
 
