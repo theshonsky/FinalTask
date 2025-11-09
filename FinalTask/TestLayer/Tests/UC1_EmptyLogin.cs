@@ -2,14 +2,17 @@
 using FinalTask.CoreLayer;
 using FinalTask.CoreLayer.WebDriver.WebDriverWrapper;
 using FluentAssertions;
+using log4net;
+using System.Security.Policy;
 
-namespace FinalTask.TestLeyer.Tests
+namespace FinalTask.TestLayer.Tests
 {
-    public class UC2_MissingPassword : IDisposable
+    public class UC1_EmptyLogin : IDisposable
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(UC1_EmptyLogin));
         private readonly WebDriverWrapper browser;
 
-        public UC2_MissingPassword()
+        public UC1_EmptyLogin()
         {
             var browserType = (BrowserType)Enum.Parse(typeof(BrowserType), Config.BrowserType);
             browser = new WebDriverWrapper(browserType);
@@ -18,14 +21,18 @@ namespace FinalTask.TestLeyer.Tests
         }
 
         [Fact]
-        public void InvalidLogin_ShouldDisplayPassRequirment()
+        public void InvalidLogin_ShouldDisplayNameRequirment()
         {
-            LoginPage loginPage = new LoginPage(browser);
-            string errorText = "Epic sadface: Password is required";
+            log.Info($"Test UC1 start point");
 
-            loginPage.LoginUsernameOnly("standard_user", "secret_sauce");
+            LoginPage loginPage = new LoginPage(browser);
+            string errorText = "Epic sadface: Username is required";
+
+            loginPage.SubmitWithEmptyCredentials("standard_user", "secret_sauce");
+            log.Info($"UC1 InputSubmitted");
 
             loginPage.GetErrorText().Should().Be(errorText);
+            log.Info($"Test UC1 passed");
         }
 
         public void Dispose()

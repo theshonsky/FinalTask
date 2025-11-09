@@ -2,11 +2,13 @@
 using FinalTask.CoreLayer;
 using FinalTask.CoreLayer.WebDriver.WebDriverWrapper;
 using FluentAssertions;
+using log4net;
 
-namespace FinalTask.TestLeyer.Tests
+namespace FinalTask.TestLayer.Tests
 {
     public class UC3_ValidLogin : IDisposable
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(UC3_ValidLogin));
         private readonly WebDriverWrapper browser;
 
         public UC3_ValidLogin()
@@ -26,13 +28,17 @@ namespace FinalTask.TestLeyer.Tests
         [Theory]
         [MemberData(nameof(ValidCredentials))]
         public void ValidLogin_ShouldDisplayCorrectLogo(string username, string password)
-        { 
+        {
+            log.Info($"Test UC3 start point");
+
             string logoText = "Swag Labs";
 
             var loginPage = new LoginPage(browser);
             var mainPage = loginPage.Login(username, password);
+            log.Info($"User logged in");
 
             mainPage.GetLogoText().Should().Be(logoText);
+            log.Info($"Test UC3 passed");
 
             browser.NavigateTo(Config.AppUrl);
         }

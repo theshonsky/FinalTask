@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using log4net;
+using OpenQA.Selenium;
 
 namespace FinalTask.CoreLayer.WebDriver.WebDriverWrapper
 {
@@ -9,6 +10,8 @@ namespace FinalTask.CoreLayer.WebDriver.WebDriverWrapper
         private readonly IWebDriver driver;
 
         private const int WaitTimeInSeconds = 5;
+
+        private readonly ILog log = LogManager.GetLogger(typeof(WebDriverWrapper));
 
         public WebDriverWrapper(BrowserType browserType)
         {
@@ -27,6 +30,7 @@ namespace FinalTask.CoreLayer.WebDriver.WebDriverWrapper
         }
         public void NavigateTo(string url)
         {
+            log.Info($"Navigating to URL: {url}");
             driver.Navigate().GoToUrl(url);
         }
 
